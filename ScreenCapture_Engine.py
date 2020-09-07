@@ -38,10 +38,12 @@ def getBoxRange():
 
 
 def rangeScreenshot(range):
+    from numpy import array
+
     # left, top, width, height
     image=pyautogui.screenshot(region=range)
     image.save("imageTaken.png")
-    return image
+    return array(image)
 
 
 # ***************************
