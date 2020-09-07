@@ -50,7 +50,7 @@ def imagePostPro(image):
 
 
 def itt_OCR(image, config='--psm 4 --oem 1'): # oem 1, 2 -- psm 6, 11, 4, 1, 3, 12
-    pytesseract.pytesseract.tesseract_cmd = 'TeseractFiles/tesseract.exe'
+    pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
     text = pytesseract.image_to_string(image, lang='eng', config=config)
     spell = Speller()
     text = spell(text)

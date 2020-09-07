@@ -1,5 +1,6 @@
 from OCR_Engine import *
 
+
 def testOnData(config, dir):
     import os.path
     import cv2
@@ -12,7 +13,6 @@ def testOnData(config, dir):
 
         out_image = imagePostPro(in_image)
         out_text = itt_OCR(out_image, config)
-        # out_text = ""
 
         cv2.imwrite(dir + "output/" + fileName, out_image)
         open(dir + "output/" + fileName[:-3]+"txt", "w", encoding="utf-8").write(out_text)
@@ -24,9 +24,9 @@ def testOnData(config, dir):
     mean=0
     for s in similList:
         mean+=s[0]
-        text+=s[1]+": "+str(s[0])+"\n"
+        text+=s[1]+": "+str(round(s[0], 3))+"\n"
     open(dir + "error.txt", "a").write(text)
-    return round(mean / len(similList), 3)
+    return round(mean / len(similList), 5)
 
 
 def sen_simil_ratio(X,Y):
@@ -53,11 +53,12 @@ def sen_simil_ratio(X,Y):
     for i in range(len(rvector)):
         c += l1[i] * l2[i]
     cosine = c / float((sum(l1) * sum(l2)) ** 0.5)
-    return round(cosine, 3)
+    return cosine
 
 
 def testPSM(dir):
     from traceback import format_exc
+    open(dir+"prevError.txt", "w", encoding="utf-8").write(open(dir + "error.txt", "r").read())
     open(dir + "error.txt", "w").write("")
     for j in [1, 2]:
         for i in [6, 11, 4, 1, 3, 12]:
@@ -93,8 +94,10 @@ def testBox(config, dir, fileName):
 
 
 def test(config, dir):
+    open(dir+"prevError.txt", "w", encoding="utf-8").write(open(dir + "error.txt", "r").read())
     open(dir + "error.txt", "w").write("")
     open(dir + "error.txt", "a").write("average: "+str(testOnData(config, dir)))
+
 
 dir = "Test_DataBase/"
 # testPSM(dir)
